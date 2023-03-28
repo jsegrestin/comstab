@@ -1,0 +1,15 @@
+Package: comstab
+Title: Partitioning the drivers of stability of ecological communities
+Version: 0.0.1
+Authors@R: 
+    person("Jules", "Segrestin", , "jsegrestin@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7661-6061"))
+Description: Contains the basic functions to apply the unified framework for partitioning the drivers of stability of ecological communities (Segrestin et al. in prep).
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports:
+    stats,
+    graphics,
+    Ternary
