@@ -30,13 +30,16 @@
 
 plot.comstab <- function(x, ..., xlab = "", ylab = "Log scale", cex.comp = 1){
   dots <- list(...)
-  graphics::plot(x = 1:4, y = cumprod(x), t = "b", log = "y", xaxt = "n",
+  y <- x$CVs
+  graphics::plot(x = 1:4, y = y, t = "b", log = "y", xaxt = "n",
                  xlab = xlab, ylab = ylab, ...)
-  graphics::axis(side = 1, at = 1:4, labels = c(expression(bar(CV)), expression(widetilde(CV)), expression(widetilde(CV)*psi), "CV"), ...)
+  graphics::axis(side = 1, at = 1:4, labels = c(expression(CV[e]), expression(widetilde(CV)), expression(CV[a]), expression(CV[com])), ...)
   graphics::mtext(text = c("Dominance", "Asynchrony", "Averaging"), side = 1, at = 1.5:3.5, line = -1, cex = cex.comp)
+  
   if("cex.axis" %in% names(dots)){
     graphics::mtext(text = c(expression(Delta), expression(psi), expression(omega)), side = 1, at = 1.5:3.5, line = -1-cex.comp, cex = dots$cex.axis)
   }else{
     graphics::mtext(text = c(expression(Delta), expression(psi), expression(omega)), side = 1, at = 1.5:3.5, line = -1-cex.comp, cex = par()$cex.axis)
   }
+  
 }

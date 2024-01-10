@@ -36,8 +36,8 @@
 ternStab <- function(x, ..., point = TRUE, add = FALSE){
   if(!inherits(x, 'comstab')) stop("x must be an object of class 'comstab'.")
   
-  # calculate the relative contributions of each stabilizing components
-  rel <- log(x[2:4]) / log(prod(x[2:4]))
+  # the relative contributions of each stabilizing components
+  rel <- x$Relative
   
   # plot the result
   if(!add){

@@ -7,7 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-`comstab` is a R package that contains the basic functions to apply the unified framework for partitioning the drivers of stability of ecological communities (Segrestin <i>et al.</i> in prep).
+`comstab` is an R package that contains basic functions to apply the unified framework for partitioning the drivers of stability of ecological communities (Segrestin <i>et al.</i> in prep).
 
 ## Installation
 
@@ -20,4 +20,4 @@ devtools::install_github("jsegrestin/comstab")
 
 ## Dependencies
 
-Apart from base, `comstab`depends on `stats`, `graphics`, and `Ternary`
+Apart from base, `comstab` depends on `stats`, `graphics`, and `Ternary`

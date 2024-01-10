@@ -16,4 +16,4 @@ devtools::install_github("jsegrestin/comstab")
 
 ## Dependencies
 
-Apart from base, `comstab`depends on `stats`, `graphics`, and `Ternary`
+Apart from base, `comstab` depends on `stats`, `graphics`, and `Ternary`

@@ -2,33 +2,42 @@
 % Please edit documentation in R/partitionR.R
 \name{partitionR}
 \alias{partitionR}
-\title{Partitioning community CV}
+\title{Partitioning of the temporal CV of ecological communities}
 \usage{
-partitionR(z, n = 1)
+partitionR(z, ny = 1)
 }
 \arguments{
 \item{z}{A \code{matrix} containing repeated measurements of species abundances.
 The \code{matrix} must contain numerical values only, with years in rows and species in
 columns. Remove any extra column.}
 
-\item{n}{Only species appearing more than \code{n} years (\code{integer}, defaults to 1) are used in the calculations.}
+\item{ny}{Only species appearing more than \code{ny} years (\code{integer}, defaults to 1) are used in the calculations.}
 }
 \value{
-Returns an object of class \code{'comstab'}. It contains the mean coefficient of variation of species (\eqn{\overline{CV}}),
-the dominance (\eqn{ \Delta}), asynchrony (\eqn{ \Psi}) and averaging (\eqn{ \omega}) effects.
+Returns an object of class \code{'comstab'}.
+
+An object of class \code{'comstab'} is a list containing the following components:
+\itemize{
+\item \code{'CVs'} a named vector of calculated coefficient of variations. \code{CVe} is the CV of an average species,
+\code{CVtilde} is the mean of species CVs weighted by their relative abundances, \code{CVa} is the expected community CV if
+the community was stabilized by species asynchrony only, and \code{CVc} is the observed community CV.
+\item \code{'Stabilization'} a named vector of the stabilizing effects. \code{tau} is the total stabilization, \code{Delta} is
+the dominance effect, \code{Psi} is the asynchrony effect, and \code{omega} is the averaging effect.
+\item \code{'Relative'} a named vector of the relative contributions of each stabilizing effect to the total stabilization.
+\code{Delta_cont}, \code{Psi_cont}, and \code{omega_cont} are the relative contribution of respectively, the dominance, asynchrony, and averaging effects to the total stabilization.
+}
 }
 \description{
-\code{PartitionR()} is a function used to partition the temporal coefficient
-of variation of a community into the mean coefficient of variation of species
-and three stabilizing components: the dominance, asynchrony and averaging effects
+\code{PartitionR()} is a function used to partition the temporal coefficient of variation of a community
+into the variability of the average species and three stabilizing effects: the dominance, asynchrony and averaging effects
 (see Details).
 }
 \details{
 The analytic framework is described in details in Segrestin \emph{et al.} (in prep).
-In short, the partitioning relies on the following equation: \deqn{CV=\overline{CV} \Delta \Psi \omega}
-where \eqn{CV} is the community coefficient of variation (reciprocal of community stability),
-\eqn{\overline{CV}} is the mean species coefficient of variation, \eqn{ \Delta} is the dominance effect,
-\eqn{ \Psi} is the asynchrony effect, and \eqn{ \omega} is the averaging effect.
+In short, the partitioning relies on the following equation: \deqn{CV_{com} = CV_e \Delta \Psi \omega}
+where \eqn{CV_{com}} is the community coefficient of variation (reciprocal of community stability),
+\eqn{CV_e} is the expected community CV when controlling for the dominance structure and species temporal synchrony,
+\eqn{ \Delta} is the dominance effect, \eqn{ \Psi} is the asynchrony effect, and \eqn{ \omega} is the averaging effect.
 }
 \examples{
 require(stats)

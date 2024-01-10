@@ -4,12 +4,12 @@
 \alias{comTS}
 \title{Simulating time series for ecological communities}
 \usage{
-comTS(nsp, ny, even, mvs, sync = c("-1", "0", "1"))
+comTS(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2"))
 }
 \arguments{
 \item{nsp}{Number of species in the community \code{(integer)}.}
 
-\item{ny}{Length of the time series in years \code{(integer)}.}
+\item{ny}{Length of the time series in years \code{(integer > 5)}.}
 
 \item{even}{Parameter of the geometric rank-abundance curve
 ranging between 0 and 1 \code{(numeric)} .}
@@ -20,12 +20,15 @@ relationship ranging between 1 and 2 \code{(numeric)}.}
 \item{sync}{Level of synchrony between species \code{(factor)}:
 \itemize{
 \item \code{"0"}: independant fluctuations.
-\item \code{"+1"}: positive synchrony.
+\item \code{"1"}: positive synchrony.
+\item \code{"2"}: high positive synchrony.
 \item \code{"-1"}: anti-synchronous fluctuations.
+\item \code{"-2"}: high anti-synchronous fluctuations.
 }}
 }
 \value{
 A \code{matrix} of \code{'ny'} rows and \code{'nsp'} columns, containing numerical values of species abundances.
+The parameters used to compute species values (even, mvs, and sync) are stored as attributes of the matrix.
 }
 \description{
 \code{comTS()} is a function used to simulate \code{com}munity \code{T}ime \code{S}eries
@@ -39,15 +42,17 @@ abundances while a low \code{'even'} means a strongly dominated community. Speci
 calculated following Taylor’s power law, using with a \code{'mvs'} scaling coefficient.
 Finally, for each species, the \code{'ny'} abundance values are sampled from a normal distribution
 with the corresponding species parameters, and bounded to positive values. Since each species is simulated independently of others,
-the resulting simulation can be used to describe a community where the \code{'nsp'} species fluctuate independently (\code{'sync'} = 0).
-To simulate an overall positive synchrony (\code{'sync'} = 1), the temporal sequences
+the resulting simulation can be used to describe a community where the \code{'nsp'} species fluctuate independently (\code{'sync'} = "0").
+To simulate an overall positive synchrony (\code{'sync'} = "1"), the temporal sequences
 of each species are sorted to maximize the number of years with all species
-having values above or below their respective means (one random selection among many possible combinations).
-A stabilizing negative synchrony (\code{'sync'} = -1) is simulated by sorting the temporal sequences
+having values above or below their respective median (one random selection among many possible combinations).
+A stabilizing negative synchrony (\code{'sync'} = "-1") is simulated by sorting the temporal sequences
 of each species to maximize the number of years where successively abundant species
-have values above and below their respective means (one random selection among many possible combinations).
+have values above and below their respective median (one random selection among many possible combinations).
+High positive synchrony (\code{'sync'} = "2") and high negative synchrony (\code{'sync'} = "-2") are generated using a similar approach but
+sorting values based on four quartiles instead of using the median only.
 
-The simulation use a simplistic approach where species fluctuations are not related to any underlying environmental factor
+The simulation uses a simplistic approach where species fluctuations are not related to any underlying environmental factor
 nor demographic parameters. Consequently, the temporal order of the simulated abundances for each species cannot be considered realistic.
 Nevertheless, this simplification has little influence on the analyses performed in this \code{R} package since none of the indices
 calculated depend on the temporal order of individual series, but rather describe the overall variability and temporal coordination of species.
