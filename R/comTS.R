@@ -103,7 +103,7 @@ comTS <- function(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2")){
     check <- check_TPL(sim = sim, K = K, mvs = mvs)
     loop <- loop + 1
   }
-  if (loop == 1000) stop("fail to simulate a community matching the input parameters: decrease species richness or increase community evenness")
+  if (loop == 100) stop("fail to simulate a community matching the input parameters: decrease species richness or increase community evenness")
   
   # sorting values according to the species synchrony level
   split_quantile <- function(x, probs) {
