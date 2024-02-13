@@ -38,7 +38,7 @@
 #' # Runs the partitioning of the community coefficient of variation:
 #' partitionR(z)
 #' 
-#' @importFrom stats var setNames
+#' @importFrom stats var coef lm cor.test setNames
 #' 
 #' @author Jules Segrestin, \email{jsegrestin@@gmail.com}
 #' 
@@ -71,6 +71,7 @@ partitionR <- function(z, ny = 1){
   CVi <- sqrt(vari) / meani
   TPL <- stats::coef(stats::lm(log10(CVi) ~ log10(meani)))
   CVe <- 10^TPL[1] * (meansum / n) ^ TPL[2]
+  if (stats::cor.test(log10(CVi), log10(meani))$p.value > 0.05) warning("No significant power law between species CVs and abundances.")
   
   # Dominance effect
   sumsd <- sum(sqrt(vari))
