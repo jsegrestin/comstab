@@ -1,13 +1,19 @@
 comstab
 ================
 
-`comstab` is a R package that contains the basic functions to apply the
+`comstab` is an R package that contains basic functions to apply the
 unified framework for partitioning the drivers of stability of
-ecological communities (Segrestin <i>et al.</i> in prep).
+ecological communities (Segrestin <i>et al.</i> 2024).
 
 ## Installation
 
-You can install the current version from GitHub with:
+You can install the stable version from CRAN with:
+
+``` r
+install.packages("comstab")
+```
+
+Alternatively, you can install the development version with:
 
 ``` r
 require(devtools)

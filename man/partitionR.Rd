@@ -33,7 +33,7 @@ into the variability of the average species and three stabilizing effects: the d
 (see Details).
 }
 \details{
-The analytic framework is described in details in Segrestin \emph{et al.} (in prep).
+The analytic framework is described in details in Segrestin \emph{et al.} (2024).
 In short, the partitioning relies on the following equation: \deqn{CV_{com} = CV_e \Delta \Psi \omega}
 where \eqn{CV_{com}} is the community coefficient of variation (reciprocal of community stability),
 \eqn{CV_e} is the expected community CV when controlling for the dominance structure and species temporal synchrony,
@@ -50,7 +50,7 @@ partitionR(z)
 
 }
 \references{
-Segrestin \emph{et al.} (in prep) A unified framework for partitioning the drivers of stability of ecological communities
+Segrestin \emph{et al.} (2024) A unified framework for partitioning the drivers of stability of ecological communities
 }
 \author{
 Jules Segrestin, \email{jsegrestin@gmail.com}

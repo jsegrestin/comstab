@@ -52,7 +52,7 @@
 #' comTS(nsp = 10, ny = 30, even = 0.6, mvs = 1.5, sync = "0")
 #' 
 #' @author Jules Segrestin, \email{jsegrestin@@gmail.com}
-#' @importFrom stats runif rnorm var lm quantile
+#' @importFrom stats runif rnorm var lm anova quantile
 #' @export
 
 comTS <- function(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2")){

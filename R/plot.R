@@ -12,6 +12,8 @@
 #' @param cex.comp A numerical value giving the label size of stabilizing components.
 #' This is an absolute measure, not scaled by par("cex").
 #' 
+#' @return No return value, graphical function.
+#' 
 #' @examples
 #' require(graphics)
 #' 

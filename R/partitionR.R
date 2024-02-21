@@ -21,13 +21,13 @@
 #'  * `'Relative'` a named vector of the relative contributions of each stabilizing effect to the total stabilization.
 #'  `Delta_cont`, `Psi_cont`, and `omega_cont` are the relative contribution of respectively, the dominance, asynchrony, and averaging effects to the total stabilization. 
 #'  
-#' @details The analytic framework is described in details in Segrestin *et al.* (in prep).
+#' @details The analytic framework is described in details in Segrestin *et al.* (2024).
 #' In short, the partitioning relies on the following equation: \deqn{CV_{com} = CV_e \Delta \Psi \omega} 
 #' where \eqn{CV_{com}} is the community coefficient of variation (reciprocal of community stability), 
 #' \eqn{CV_e} is the expected community CV when controlling for the dominance structure and species temporal synchrony,
 #' \eqn{ \Delta} is the dominance effect, \eqn{ \Psi} is the asynchrony effect, and \eqn{ \omega} is the averaging effect.
 #'
-#' @references Segrestin *et al.* (in prep) A unified framework for partitioning the drivers of stability of ecological communities
+#' @references Segrestin *et al.* (2024) A unified framework for partitioning the drivers of stability of ecological communities
 #' 
 #' @examples
 #' require(stats)

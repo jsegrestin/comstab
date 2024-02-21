@@ -11,6 +11,8 @@
 #' @param point plot the community on the ternary plot (`logical`, defaults to TRUE)
 #' @param add add the community on the current plot window (`logical`, defaults to FALSE)
 #' 
+#' @return No return value, graphical function.
+#' 
 #' @examples
 #' require(Ternary)
 #' 
@@ -21,6 +23,7 @@
 #' x <- partitionR(z)
 #' 
 #' # Plots the relative contributions
+#' oldpar <- par(no.readonly = TRUE)
 #' par(mar = c(0, 0, 0, 0))
 #' ternStab(x)
 #' 
@@ -28,6 +31,8 @@
 #' z2 <- comTS(nsp = 15, ny = 30, even = .7, mvs = 1.1, sync = "1")
 #' x2 <- partitionR(z2)
 #' ternStab(x2, add = TRUE, col = "red")
+#' 
+#' par(oldpar)
 #' 
 #' @author Jules Segrestin, \email{jsegrestin@@gmail.com}
 #' @import Ternary

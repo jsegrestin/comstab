@@ -15,6 +15,9 @@ ternStab(x, ..., point = TRUE, add = FALSE)
 
 \item{add}{add the community on the current plot window (\code{logical}, defaults to FALSE)}
 }
+\value{
+No return value, graphical function.
+}
 \description{
 \code{ternStab()} is a graph function used to represent the relative contributions
 of the three stabilizing effects ("Dominance", "Asynchrony" and "Averaging") on a
@@ -30,6 +33,7 @@ z <- comTS(nsp = 10, ny = 30, even = 0.6, mvs = 1.5, sync = "0")
 x <- partitionR(z)
 
 # Plots the relative contributions
+oldpar <- par(no.readonly = TRUE)
 par(mar = c(0, 0, 0, 0))
 ternStab(x)
 
@@ -37,6 +41,8 @@ ternStab(x)
 z2 <- comTS(nsp = 15, ny = 30, even = .7, mvs = 1.1, sync = "1")
 x2 <- partitionR(z2)
 ternStab(x2, add = TRUE, col = "red")
+
+par(oldpar)
 
 }
 \author{

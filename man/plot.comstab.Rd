@@ -18,6 +18,9 @@
 \item{cex.comp}{A numerical value giving the label size of stabilizing components.
 This is an absolute measure, not scaled by par("cex").}
 }
+\value{
+No return value, graphical function.
+}
 \description{
 Plotting method for object inheriting from class "comstab".
 }
