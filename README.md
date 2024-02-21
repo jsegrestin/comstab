@@ -1,5 +1,6 @@
 comstab
 ================
+[![DOI](https://zenodo.org/badge/608223971.svg)](https://zenodo.org/doi/10.5281/zenodo.10687005)
 
 `comstab` is an R package that contains basic functions to apply the
 unified framework for partitioning the drivers of stability of
