@@ -40,6 +40,7 @@
 
 ternStab <- function(x, ..., point = TRUE, add = FALSE){
   if(!inherits(x, 'comstab')) stop("x must be an object of class 'comstab'.")
+  if(any(is.na(x$Relative))) stop("Relative effects not found. This usually happens when a stabilizing effect is higher than 1.")
   
   # the relative contributions of each stabilizing components
   rel <- x$Relative

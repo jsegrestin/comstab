@@ -19,7 +19,8 @@
 #'  * `'Stabilization'` a named vector of the stabilizing effects. `tau` is the total stabilization, `Delta` is
 #'  the dominance effect, `Psi` is the asynchrony effect, and `omega` is the averaging effect.
 #'  * `'Relative'` a named vector of the relative contributions of each stabilizing effect to the total stabilization.
-#'  `Delta_cont`, `Psi_cont`, and `omega_cont` are the relative contribution of respectively, the dominance, asynchrony, and averaging effects to the total stabilization. 
+#'  `Delta_cont`, `Psi_cont`, and `omega_cont` are the relative contribution of respectively, the dominance, asynchrony, and averaging effects to the total stabilization.
+#'  Returns a vector of NAs if any Stabilizing effect is higher than 1.
 #'  
 #' @details The analytic framework is described in details in Segrestin *et al.* (2024).
 #' In short, the partitioning relies on the following equation: \deqn{CV_{com} = CV_e \Delta \Psi \omega} 
@@ -49,7 +50,6 @@ partitionR <- function(z, ny = 1){
   if(!is.matrix(z)) stop("Error: z is not a matrix")
   if(!is.numeric(z)) stop("Error: non-numerical values in z")
   if(dim(z)[1] == 1) stop("Error: single-row matrix")
-  if(dim(z)[2] == 1) warning("This analysis is not relevant for single-species communities")
   if(!is.numeric(ny)) stop("ny must be numeric")
   
   # Remove absent species
@@ -65,44 +65,75 @@ partitionR <- function(z, ny = 1){
   meansum <- mean(rowSums(z))
   CV <- sqrt(varsum)/meansum
   
-  # Expected community CV if all species had even abundances
-  vari <- apply(X = z, MARGIN = 2, FUN = stats::var)
-  meani <- colMeans(z)
-  CVi <- sqrt(vari) / meani
-  TPL <- stats::coef(stats::lm(log10(CVi) ~ log10(meani)))
-  CVe <- 10^TPL[1] * (meansum / n) ^ TPL[2]
-  if (stats::cor.test(log10(CVi), log10(meani))$p.value > 0.05) warning("No significant power law between species CVs and abundances.")
+  if(dim(z)[2] == 1) {
+    
+    warning("This analysis is not relevant for single-species communities")
+    
+    # outputs
+    CVs <- stats::setNames(object = c(CV, CV, CV, CV),
+                           nm = c("CVe", "CVtilde", "CVa", "CVc"))
+    Stabilization <- stats::setNames(object = c(1, 1, 1, 1),
+                                     nm = c("tau", "Delta", "Psi", "omega"))
+    Relative <- stats::setNames(object = rep(NA, 3),
+                                nm = c("Delta_cont", "Psi_cont", "omega_cont"))
+    res <- list(CVs = CVs, Stabilization = Stabilization, Relative = Relative)
+    class(res) <- "comstab"
+    return(res)
+  }
   
-  # Dominance effect
-  sumsd <- sum(sqrt(vari))
-  CVtilde <- sumsd / meansum
-  Delta <- CVtilde / CVe
-  
-  # Compensatory dynamics
-  sdsum <- sqrt(varsum)
-  rootPhi <- sdsum / sumsd
-  
-  # Asynchrony effect
-  sumvar <- sum(vari)
-  beta <- log10(1/2) / (log10(sumvar / (sumsd^2)))
-  Psi <- rootPhi^beta
-  
-  # averaging effect
-  omega <- rootPhi / Psi
-  
-  # total stabilization
-  tau <- Delta * Psi * omega
-  
-  # outputs
-  CVs <- stats::setNames(object = c(CVe, CVtilde, CVtilde * Psi, CV),
-                         nm = c("CVe", "CVtilde", "CVa", "CVc"))
-  Stabilization <- stats::setNames(object = c(tau, Delta, Psi, omega),
-                                   nm = c("tau", "Delta", "Psi", "omega"))
-  Relative <- stats::setNames(object = c(log10(Delta)/log10(tau), log10(Psi)/log10(tau), log10(omega)/log10(tau)),
-                              nm = c("Delta_cont", "Psi_cont", "omega_cont"))
-  res <- list(CVs = CVs, Stabilization = Stabilization, Relative = Relative)
-  class(res) <- "comstab"
-  return(res)
+  if(dim(z)[2] > 1) {
+    
+    # Expected community CV if all species had even abundances
+    vari <- apply(X = z, MARGIN = 2, FUN = stats::var)
+    meani <- colMeans(z)
+    CVi <- sqrt(vari) / meani
+    TPL <- stats::coef(stats::lm(log10(CVi) ~ log10(meani)))
+    CVe <- 10^TPL[1] * (meansum / n) ^ TPL[2]
+    
+    if(dim(z)[2] > 2){
+      testcor <- stats::cor.test(log10(CVi), log10(meani))$p.value > 0.05
+      if (testcor) warning("No significant power law between species CVs and abundances.")
+    }
+    
+    # Dominance effect
+    sumsd <- sum(sqrt(vari))
+    CVtilde <- sumsd / meansum
+    Delta <- CVtilde / CVe
+    if(Delta > 1) warning("Destabilizing effect of dominants. Relative effects cannot be computed.")
+    
+    # Compensatory dynamics
+    sdsum <- sqrt(varsum)
+    rootPhi <- sdsum / sumsd
+    
+    # Asynchrony effect
+    sumvar <- sum(vari)
+    beta <- log10(1/2) / (log10(sumvar / (sumsd^2)))
+    Psi <- rootPhi^beta
+    
+    # averaging effect
+    omega <- rootPhi / Psi
+    if(omega > 1) warning("Community diversity is lower than the null diversity. Relative effects cannot be computed.")
+    
+    # total stabilization
+    tau <- Delta * Psi * omega
+    
+    # outputs
+    CVs <- stats::setNames(object = c(CVe, CVtilde, CVtilde * Psi, CV),
+                           nm = c("CVe", "CVtilde", "CVa", "CVc"))
+    Stabilization <- stats::setNames(object = c(tau, Delta, Psi, omega),
+                                     nm = c("tau", "Delta", "Psi", "omega"))
+    if(any(Stabilization > 1)){
+      Relative <- stats::setNames(object = rep(NA, 3),
+                                  nm = c("Delta_cont", "Psi_cont", "omega_cont"))
+    } else {
+      Relative <- stats::setNames(object = c(log10(Delta)/log10(tau), log10(Psi)/log10(tau), log10(omega)/log10(tau)),
+                                  nm = c("Delta_cont", "Psi_cont", "omega_cont"))
+    }
+    
+    res <- list(CVs = CVs, Stabilization = Stabilization, Relative = Relative)
+    class(res) <- "comstab"
+    return(res)
+  }
 }
 
 #' @export
