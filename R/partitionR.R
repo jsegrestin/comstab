@@ -28,7 +28,7 @@
 #' \eqn{CV_e} is the expected community CV when controlling for the dominance structure and species temporal synchrony,
 #' \eqn{ \Delta} is the dominance effect, \eqn{ \Psi} is the asynchrony effect, and \eqn{ \omega} is the averaging effect.
 #'
-#' @references Segrestin *et al.* (2024) A unified framework for partitioning the drivers of stability of ecological communities
+#' @references Segrestin *et al.* (2024) A unified framework for partitioning the drivers of stability of ecological communities. Global Ecology and Biogeography, https://doi.org/10.1111/geb.13828
 #' 
 #' @examples
 #' require(stats)
@@ -64,10 +64,11 @@ partitionR <- function(z, ny = 1){
   varsum <- stats::var(rowSums(z))
   meansum <- mean(rowSums(z))
   CV <- sqrt(varsum)/meansum
+  if(CV == 0) stop("The community CV is zero. This analysis does not apply to perfectly stable communities.")
   
   if(dim(z)[2] == 1) {
     
-    warning("This analysis is not relevant for single-species communities")
+    warning("This analysis is not relevant for single-species communities. All stabilizing effects were fixed to 1.")
     
     # outputs
     CVs <- stats::setNames(object = c(CV, CV, CV, CV),
@@ -139,7 +140,7 @@ partitionR <- function(z, ny = 1){
 #' @export
 print.comstab <- function(x, ...){
   cat("\nPartitionning of the community temporal variability (CV)")
-  cat("\nSee Segrestin et al. (2023)")
+  cat("\nSee Segrestin et al. (2024)")
   cat("\n")
   cat(paste0("Community CV = ", round(x$CVs["CVc"], 2),
              "\nTotal stabilization = ", round(x$Stabilization["tau"], 2),

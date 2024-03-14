@@ -5,7 +5,7 @@ comstab
 
 `comstab` is an R package that contains basic functions to apply the
 unified framework for partitioning the drivers of stability of
-ecological communities (Segrestin <i>et al.</i> 2024).
+ecological communities (Segrestin <i>et al.</i> 2024 Global Ecology and Biogeography).
 
 ## Installation
 
