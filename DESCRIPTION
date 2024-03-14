@@ -1,6 +1,6 @@
 Package: comstab
 Title: Partitioning the Drivers of Stability of Ecological Communities
-Version: 0.0.2
+Version: 0.0.2.9000
 Authors@R: 
     person("Jules", "Segrestin", , "jsegrestin@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-7661-6061"))
