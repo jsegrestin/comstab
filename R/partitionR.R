@@ -28,7 +28,7 @@
 #' \eqn{CV_e} is the expected community CV when controlling for the dominance structure and species temporal synchrony,
 #' \eqn{ \Delta} is the dominance effect, \eqn{ \Psi} is the asynchrony effect, and \eqn{ \omega} is the averaging effect.
 #'
-#' @references Segrestin *et al.* (2024) A unified framework for partitioning the drivers of stability of ecological communities. Global Ecology and Biogeography, https://doi.org/10.1111/geb.13828
+#' @references Segrestin *et al.* (2024) A unified framework for partitioning the drivers of stability of ecological communities. Global Ecology and Biogeography, 33(5), e13828. https://doi.org/10.1111/geb.13828
 #' 
 #' @examples
 #' require(stats)
@@ -49,26 +49,33 @@ partitionR <- function(z, ny = 1){
   
   if(!is.matrix(z)) stop("Error: z is not a matrix")
   if(!is.numeric(z)) stop("Error: non-numerical values in z")
+  if(any(z < 0)) stop("Error: negative values in z")
   if(dim(z)[1] == 1) stop("Error: single-row matrix")
   if(!is.numeric(ny)) stop("ny must be numeric")
   
+  # Replace Nas with zeros
+  z[is.na(z)] <- 0
   # Remove absent species
-  z <- z[, colSums(z) > 0, drop = F]
-  
-  # Number of years each species is recorded
+  z <- z[, colSums(z) > 0, drop = FALSE]
+  # Remove non-fluctuating species
+  z <- z[, apply(X = z, MARGIN = 2, FUN = min) != apply(X = z, MARGIN = 2, FUN = max), drop = FALSE]
+  # Remove transient species appearing only ny years
   nyi <- apply(X = z, MARGIN = 2, FUN = function(x) sum(x > 0))
-  z <- z[, nyi > ny] #remove transient species appearing only ny years
+  z <- z[, nyi > ny, drop = FALSE] 
+  
   n <- ncol(z)
   
   # Total CV
   varsum <- stats::var(rowSums(z))
   meansum <- mean(rowSums(z))
   CV <- sqrt(varsum)/meansum
-  if(CV == 0) stop("The community CV is zero. This analysis does not apply to perfectly stable communities.")
+  
+  if(CV == 0) stop("The community CV is zero. This analysis does not apply to 
+                   perfectly stable communities.")
   
   if(dim(z)[2] == 1) {
-    
-    warning("This analysis is not relevant for single-species communities. All stabilizing effects were fixed to 1.")
+    warning("This analysis is not relevant for single-species communities. 
+            All stabilizing effects were fixed to 1.")
     
     # outputs
     CVs <- stats::setNames(object = c(CV, CV, CV, CV),
@@ -88,12 +95,18 @@ partitionR <- function(z, ny = 1){
     vari <- apply(X = z, MARGIN = 2, FUN = stats::var)
     meani <- colMeans(z)
     CVi <- sqrt(vari) / meani
-    TPL <- stats::coef(stats::lm(log10(CVi) ~ log10(meani)))
+    
+    if (any(CVi == 0)) warning("Non-fluctuating species found in the data.")
+    CV0 <- which(CVi > 0)
+      
+    TPL <- stats::coef(stats::lm(log10(CVi[CV0]) ~ log10(meani[CV0])))
     CVe <- 10^TPL[1] * (meansum / n) ^ TPL[2]
     
-    if(dim(z)[2] > 2){
-      testcor <- stats::cor.test(log10(CVi), log10(meani))$p.value > 0.05
+    if(sum(CV0) > 5){
+      testcor <- stats::cor.test(log10(CVi[CV0]), log10(meani[CV0]))$p.value > 0.05
       if (testcor) warning("No significant power law between species CVs and abundances.")
+    } else {
+      warning("Low number of species. The power law between species CVs and abundances cannot be tested.")
     }
     
     # Dominance effect
@@ -140,7 +153,6 @@ partitionR <- function(z, ny = 1){
 #' @export
 print.comstab <- function(x, ...){
   cat("\nPartitionning of the community temporal variability (CV)")
-  cat("\nSee Segrestin et al. (2024)")
   cat("\n")
   cat(paste0("Community CV = ", round(x$CVs["CVc"], 2),
              "\nTotal stabilization = ", round(x$Stabilization["tau"], 2),

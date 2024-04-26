@@ -1,0 +1,11 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "A unified framework for partitioning the drivers of stability of ecological communities",
+  author   = "Jules Segrestin, Lars Götzenberger, Enrique Valencia, Francesco de Bello, Jan Lepš",
+  journal  = "Global Ecology and Biogeography",
+  year     = 2024,
+  volume   = 33,
+  number   = 5,
+  pages    = "e13828",
+  doi      = "10.1111/geb.13828"
+)

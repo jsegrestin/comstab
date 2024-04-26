@@ -51,7 +51,7 @@ partitionR(z)
 
 }
 \references{
-Segrestin \emph{et al.} (2024) A unified framework for partitioning the drivers of stability of ecological communities. Global Ecology and Biogeography, https://doi.org/10.1111/geb.13828
+Segrestin \emph{et al.} (2024) A unified framework for partitioning the drivers of stability of ecological communities. Global Ecology and Biogeography, 33(5), e13828. https://doi.org/10.1111/geb.13828
 }
 \author{
 Jules Segrestin, \email{jsegrestin@gmail.com}
