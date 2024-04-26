@@ -1,5 +1,9 @@
 # comstab 0.0.3
 
+* Updated final reference to the published manuscript.
+* Citation file added in the inst directory
+* 'PartitionR()' checks more specific cases that used to break the code. 
+
 # comstab 0.0.2
 
 * Updated reference to the newly published manuscript.
