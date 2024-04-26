@@ -1,4 +1,4 @@
-# comstab (development version)
+# comstab 0.0.3
 
 # comstab 0.0.2
 
