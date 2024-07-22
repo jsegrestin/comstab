@@ -3,19 +3,19 @@
 #' `TPL()` is a function used to compute the power function between
 #' species temporal means and variances.
 #' 
-#' @usage TPL(z, ny = 1, method = c("OLS", "SMA"))
+#' @usage TPL(z, ny = 0, method = c("OLS", "SMA"))
 #' 
 #' @param z A `matrix` containing repeated measurements of species abundances. 
 #' The `matrix` must contain numerical values only, with years in rows and species in
 #' columns. Remove any extra column.
-#' @param ny Only species appearing more than `ny` years (`integer`, defaults to 1) are used in the calculations.
+#' @param ny Only species appearing more than `ny` years (`integer`, defaults to 0) are used in the calculations.
 #' @param method Regression method used to estimate the scaling coefficient `(factor)`: 
 #' * `OLS` (defaults) : Ordinary least square
 #' * `SMA`: Standardized major axis, sometimes called reduced major axis
 #' 
 #' @return An object of class `'TPL'` is a list containing the following components:
 #' * `'data'` a `data.frame` containing species temporal means and variance
-#' * `'test'` the result of the Pearson's correlation test between log10-transformed species means and variances (see `cor.test` in the `stats` package)
+#' * `'test'` the result of the Pearson's correlation test between log10-transformed species means and variances (see `stats::cor.test`)
 #' * `a` the intercept of the power law
 #' * `b` the scaling coefficient of the power law
 #' 
@@ -34,7 +34,7 @@
 #' 
 #' @export
 
-TPL <- function(z, ny = 1, method = c("OLS", "SMA")){
+TPL <- function(z, ny = 0, method = c("OLS", "SMA")){
   
   if(!is.matrix(z)) stop("Error: z is not a matrix")
   if(!is.numeric(z)) stop("Error: non-numerical values in z")

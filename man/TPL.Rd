@@ -4,14 +4,14 @@
 \alias{TPL}
 \title{Computing Taylor's power law}
 \usage{
-TPL(z, ny = 1, method = c("OLS", "SMA"))
+TPL(z, ny = 0, method = c("OLS", "SMA"))
 }
 \arguments{
 \item{z}{A \code{matrix} containing repeated measurements of species abundances.
 The \code{matrix} must contain numerical values only, with years in rows and species in
 columns. Remove any extra column.}
 
-\item{ny}{Only species appearing more than \code{ny} years (\code{integer}, defaults to 1) are used in the calculations.}
+\item{ny}{Only species appearing more than \code{ny} years (\code{integer}, defaults to 0) are used in the calculations.}
 
 \item{method}{Regression method used to estimate the scaling coefficient \code{(factor)}:
 \itemize{
@@ -23,7 +23,7 @@ columns. Remove any extra column.}
 An object of class \code{'TPL'} is a list containing the following components:
 \itemize{
 \item \code{'data'} a \code{data.frame} containing species temporal means and variance
-\item \code{'test'} the result of the Pearson's correlation test between log10-transformed species means and variances (see \code{cor.test} in the \code{stats} package)
+\item \code{'test'} the result of the Pearson's correlation test between log10-transformed species means and variances (see \code{stats::cor.test})
 \item \code{a} the intercept of the power law
 \item \code{b} the scaling coefficient of the power law
 }
