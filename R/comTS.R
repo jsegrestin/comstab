@@ -145,7 +145,7 @@ comTS <- function(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2")){
   }
   
   attr(sim, "even") <- c(even = even)
-  attr(sim, "mvs") <- c(intercept = K, slope = mvs)
+  attr(sim, "mvs") <- c(intercept = log10(K), slope = mvs)
   attr(sim, "sync") <- c(sync = sync)
   return(sim)
 }
