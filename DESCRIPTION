@@ -13,7 +13,8 @@ BugReports: https://github.com/jsegrestin/comstab/issues
 Imports:
     graphics,
     stats,
-    Ternary
+    Ternary,
+    smatr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
