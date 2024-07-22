@@ -4,14 +4,14 @@
 \alias{partitionR}
 \title{Partitioning of the temporal CV of ecological communities}
 \usage{
-partitionR(z, ny = 1)
+partitionR(z, ny = 0)
 }
 \arguments{
 \item{z}{A \code{matrix} containing repeated measurements of species abundances.
 The \code{matrix} must contain numerical values only, with years in rows and species in
 columns. Remove any extra column.}
 
-\item{ny}{Only species appearing more than \code{ny} years (\code{integer}, defaults to 1) are used in the calculations.}
+\item{ny}{Only species appearing more than \code{ny} years (\code{integer}, defaults to 0) are used in the calculations.}
 }
 \value{
 Returns an object of class \code{'comstab'}.

@@ -4,12 +4,12 @@
 #'  into the variability of the average species and three stabilizing effects: the dominance, asynchrony and averaging effects
 #' (see Details).
 #' 
-#' @usage partitionR(z, ny = 1)
+#' @usage partitionR(z, ny = 0)
 #' 
 #' @param z A `matrix` containing repeated measurements of species abundances. 
 #' The `matrix` must contain numerical values only, with years in rows and species in
 #' columns. Remove any extra column.
-#' @param ny Only species appearing more than `ny` years (`integer`, defaults to 1) are used in the calculations.
+#' @param ny Only species appearing more than `ny` years (`integer`, defaults to 0) are used in the calculations.
 #' 
 #' @return Returns an object of class `'comstab'`.
 #' @return An object of class `'comstab'` is a list containing the following components:
@@ -45,7 +45,7 @@
 #' 
 #' @export
 
-partitionR <- function(z, ny = 1){
+partitionR <- function(z, ny = 0){
   
   if(!is.matrix(z)) stop("Error: z is not a matrix")
   if(!is.numeric(z)) stop("Error: non-numerical values in z")
@@ -57,8 +57,6 @@ partitionR <- function(z, ny = 1){
   z[is.na(z)] <- 0
   # Remove absent species
   z <- z[, colSums(z) > 0, drop = FALSE]
-  # Remove non-fluctuating species
-  z <- z[, apply(X = z, MARGIN = 2, FUN = min) != apply(X = z, MARGIN = 2, FUN = max), drop = FALSE]
   # Remove transient species appearing only ny years
   nyi <- apply(X = z, MARGIN = 2, FUN = function(x) sum(x > 0))
   z <- z[, nyi > ny, drop = FALSE] 
@@ -102,9 +100,9 @@ partitionR <- function(z, ny = 1){
     TPL <- stats::coef(stats::lm(log10(CVi[CV0]) ~ log10(meani[CV0])))
     CVe <- 10^TPL[1] * (meansum / n) ^ TPL[2]
     
-    if(sum(CV0) > 5){
+    if(sum(CV0) > 4){
       testcor <- stats::cor.test(log10(CVi[CV0]), log10(meani[CV0]))$p.value > 0.05
-      if (testcor) warning("No significant power law between species CVs and abundances.")
+      if (testcor) warning("No significant power law between species CVs and abundances. Check Taylor's power law (TPL function) for interpretation.")
     } else {
       warning("Low number of species. The power law between species CVs and abundances cannot be tested.")
     }
