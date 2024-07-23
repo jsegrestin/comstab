@@ -6,7 +6,7 @@ comstab
 `comstab` is an R package that contains basic functions to apply the
 unified framework for partitioning the drivers of stability of
 ecological communities (Segrestin <i>et al.</i> 2024 Global Ecology and
-Biogeography).
+Biogeography, [10.1111/geb.13828](https://doi.org/10.1111/geb.13828).
 
 ## Installation
 
@@ -25,5 +25,5 @@ devtools::install_github("jsegrestin/comstab")
 
 ## Dependencies
 
-Apart from base, `comstab` depends on `stats`, `graphics`, `smatr`, and
+Apart from base, `comstab` depends on `graphics`, `smatr`, `stats`, and
 `Ternary`
