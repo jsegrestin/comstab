@@ -13,7 +13,7 @@ columns. Remove any extra column.}
 
 \item{ny}{Only species appearing more than \code{ny} years (\code{integer}, defaults to 0) are used in the calculations.}
 
-\item{method}{Regression method used to estimate the scaling coefficient \code{(factor)}:
+\item{method}{Regression method used to estimate the scaling coefficient (\code{factor}):
 \itemize{
 \item \code{OLS} (defaults) : Ordinary least square
 \item \code{SMA}: Standardized major axis, sometimes called reduced major axis
@@ -22,8 +22,8 @@ columns. Remove any extra column.}
 \value{
 An object of class \code{'TPL'} is a list containing the following components:
 \itemize{
-\item \code{'data'} a \code{data.frame} containing species temporal means and variance
-\item \code{'test'} the result of the Pearson's correlation test between log10-transformed species means and variances (see \code{stats::cor.test})
+\item \code{data} a \code{data.frame} containing species temporal means and variance
+\item \code{test} the result of the Pearson's correlation test between log10-transformed species means and variances (see \code{stats::cor.test})
 \item \code{a} the intercept of the power law
 \item \code{b} the scaling coefficient of the power law
 }

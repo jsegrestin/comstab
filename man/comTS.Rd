@@ -4,22 +4,22 @@
 \alias{comTS}
 \title{Simulating time series for ecological communities}
 \usage{
-comTS(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2"))
+comTS(nsp, ny, even, mvs, sync = c("0", "1", "2", "-1", "-2"))
 }
 \arguments{
-\item{nsp}{Number of species in the community \code{(integer)}.}
+\item{nsp}{Number of species in the community (\code{integer}).}
 
-\item{ny}{Length of the time series in years \code{(integer > 5)}.}
+\item{ny}{Length of the time series in years (\code{integer} > 5).}
 
 \item{even}{Parameter of the geometric rank-abundance curve
-ranging between 0 and 1 \code{(numeric)} .}
+ranging between 0 and 1 (\code{numeric}) .}
 
 \item{mvs}{Scaling coefficient of the mean-variance
-relationship ranging between 1 and 2 \code{(numeric)}.}
+relationship ranging between 1 and 2 (\code{numeric}).}
 
-\item{sync}{Level of synchrony between species \code{(factor)}:
+\item{sync}{Level of synchrony between species (\code{factor}):
 \itemize{
-\item \code{"0"}: independant fluctuations.
+\item \code{"0"} (defaults): independant fluctuations.
 \item \code{"1"}: positive synchrony.
 \item \code{"2"}: high positive synchrony.
 \item \code{"-1"}: anti-synchronous fluctuations.

@@ -9,13 +9,13 @@
 #' The `matrix` must contain numerical values only, with years in rows and species in
 #' columns. Remove any extra column.
 #' @param ny Only species appearing more than `ny` years (`integer`, defaults to 0) are used in the calculations.
-#' @param method Regression method used to estimate the scaling coefficient `(factor)`: 
+#' @param method Regression method used to estimate the scaling coefficient (`factor`): 
 #' * `OLS` (defaults) : Ordinary least square
 #' * `SMA`: Standardized major axis, sometimes called reduced major axis
 #' 
 #' @return An object of class `'TPL'` is a list containing the following components:
-#' * `'data'` a `data.frame` containing species temporal means and variance
-#' * `'test'` the result of the Pearson's correlation test between log10-transformed species means and variances (see `stats::cor.test`)
+#' * `data` a `data.frame` containing species temporal means and variance
+#' * `test` the result of the Pearson's correlation test between log10-transformed species means and variances (see `stats::cor.test`)
 #' * `a` the intercept of the power law
 #' * `b` the scaling coefficient of the power law
 #' 

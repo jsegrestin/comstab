@@ -27,16 +27,16 @@
 #' Nevertheless, this simplification has little influence on the analyses performed in this `R` package since none of the indices 
 #' calculated depend on the temporal order of individual series, but rather describe the overall variability and temporal coordination of species.
 #' 
-#' @usage comTS(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2"))
+#' @usage comTS(nsp, ny, even, mvs, sync = c("0", "1", "2", "-1", "-2"))
 #' 
-#' @param nsp Number of species in the community `(integer)`.
-#' @param ny Length of the time series in years `(integer > 5)`.
+#' @param nsp Number of species in the community (`integer`).
+#' @param ny Length of the time series in years (`integer` > 5).
 #' @param even Parameter of the geometric rank-abundance curve 
-#' ranging between 0 and 1 `(numeric)` .
+#' ranging between 0 and 1 (`numeric`) .
 #' @param mvs Scaling coefficient of the mean-variance 
-#' relationship ranging between 1 and 2 `(numeric)`.
-#' @param sync Level of synchrony between species `(factor)`:
-#'  * `"0"`: independant fluctuations.
+#' relationship ranging between 1 and 2 (`numeric`).
+#' @param sync Level of synchrony between species (`factor`):
+#'  * `"0"` (defaults): independant fluctuations.
 #'  * `"1"`: positive synchrony.
 #'  * `"2"`: high positive synchrony.
 #'  * `"-1"`: anti-synchronous fluctuations.
@@ -55,7 +55,7 @@
 #' @importFrom stats runif rnorm var lm anova quantile
 #' @export
 
-comTS <- function(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2")){
+comTS <- function(nsp, ny, even, mvs, sync = c("0", "1", "2", "-1", "-2")){
   
   if(!is.numeric(nsp)) stop("argument 'nsp' must be numeric")
   if(!is.numeric(ny)) stop("argument 'ny' must be numeric")
@@ -64,7 +64,7 @@ comTS <- function(nsp, ny, even, mvs, sync = c("-2", "-1", "0", "1", "2")){
   if(even <= 0 | even >= 1) stop("argument 'even' must range between 0 and 1")
   if(!is.numeric(mvs)) stop("argument 'mvs' must be numeric")
   if(mvs  <= 1 | mvs >= 2) stop("argument 'mvs' must range between 1 and 2")
-  match.arg(sync)
+  sync <- match.arg(sync)
   
   # geometric rank abundance curve
   x <- 100
